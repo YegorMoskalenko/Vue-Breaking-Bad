@@ -1,0 +1,141 @@
+<template>
+  <main class="main">
+    <div class="top-deaths">
+      <ul class="top-deaths__ul">
+        <li class="top-deaths__li anim-items" v-for="index in 5" :key="getTopDeaths[index - 1][0]">
+          <div class="top-deaths__characters">
+            <img :src="getTopDeaths[index - 1][1].img" alt="" class="char-img"/>
+            <div class="top-deaths__characters__info">
+              <p class="top-deaths__characters__name">{{getTopDeaths[index - 1][0]}}</p>
+              <p class="top-deaths__characters__info__num-of-deaths" v-if="getTopDeaths[index - 1][1].numOfDeaths > 1">Num of Deaths - {{getTopDeaths[index - 1][1].numOfDeaths}}</p>
+              <p class="who-died">Who died:</p>
+              <ul class="top-deaths__characters__info__ul">
+                <li class="top-deaths__characters__info__li" v-for="(death, i) of getTopDeaths[index - 1][1].deaths" :key="i">{{death}};</li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
+</template>
+
+<script>
+import animateItems from "@/mixins/animations/animateItems";
+import {mapGetters} from "vuex";
+export default {
+  mixins: [animateItems],
+  computed: {
+    ...mapGetters('storeBreakingBad', ['getCharacters']),
+
+    getTopDeaths: function () {
+      return Object.entries(this.getCharacters).sort((a,b) => b[1].numOfDeaths - a[1].numOfDeaths)
+    }
+  }
+}
+</script>
+
+<style lang="less">
+.top-deaths{
+  margin: 0 30px;
+
+  .top-deaths__ul{
+    .top-deaths__li.anim-active{
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+    .top-deaths__li{
+      margin-top: 20px;
+      border: 2px solid green;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(2px);
+      background: rgba(0, 0, 0, .2);
+
+      opacity: 0;
+      transform: translate(550px, 0);
+      transition: all 1.2s ease 0s;
+
+      .top-deaths__characters{
+        display: flex;
+
+        .char-img{
+          width: 280px;
+          height: 400px;
+        }
+
+        .top-deaths__characters__name{
+          font-size: 20px;
+          font-weight: 700;
+        }
+
+        .top-deaths__characters__info__num-of-deaths{
+          font-size: 20px;
+          font-weight: 700;
+          margin-top: 10px;
+        }
+
+        .who-died{
+          font-size: 20px;
+          font-weight: 700;
+          margin-top: 10px;
+        }
+
+        .top-deaths__characters__info{
+          margin-left: 10px;
+
+          .top-deaths__characters__info__ul{
+            .top-deaths__characters__info__li{
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 500px) {
+  .top-deaths{
+    margin: 0 10px;
+    .top-deaths__ul{
+      .top-deaths__li{
+        .top-deaths__characters{
+          .char-img{
+            width: 200px;
+            height: 300px;
+          }
+          .top-deaths__characters__name{
+            font-size: 16px;
+          }
+
+          .top-deaths__characters__info__num-of-deaths{
+            font-size: 16px;
+          }
+
+          .who-died{
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 425px) {
+  .top-deaths{
+    .top-deaths__ul{
+      .top-deaths__li{
+        .top-deaths__characters{
+          flex-direction: column;
+          align-items: center;
+
+          .top-deaths__characters__info{
+            margin-top: 20px;
+            width: 300px;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
