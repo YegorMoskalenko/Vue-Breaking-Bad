@@ -97,10 +97,10 @@ export default {
 
         //quotes
         fetchQuotes: async function () {
-            let characterNewObj = {...this.getCharacters}
+            let charactersNewObj = {...this.getCharacters}
             const response = await fetch('https://www.breakingbadapi.com/api/quotes')
             const quotes = await response.json()
-            Object.entries(characterNewObj).forEach(character => {
+            Object.entries(charactersNewObj).forEach(character => {
                 let arrOfQuotes = []
                 quotes.forEach(quote => {
                     if(character[0] === quote.author){
@@ -108,10 +108,10 @@ export default {
                     }
                 })
 
-                return arrOfQuotes.length > 0 ? characterNewObj[character[0]].quotes = arrOfQuotes : false
+                return arrOfQuotes.length > 0 ? charactersNewObj[character[0]].quotes = arrOfQuotes : false
             })
 
-            return this.SET_CHARACTERS(characterNewObj)
+            return this.SET_CHARACTERS(charactersNewObj)
         },
 
         //serial info
