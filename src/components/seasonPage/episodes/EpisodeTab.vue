@@ -16,8 +16,8 @@
     <div class="search-weather episode-tab__child" @click.stop>
       <input v-model="city" type="text" class="search-weather__input" placeholder="Write a city" @focus="errorFromFetch = false; errorFromCondition = false">
       <button class="search-weather__btn" @click="fetchWeather()">Get weather info</button>
-      <p class="error-from-fetch" v-if="errorFromCondition">Write name of the city!</p>
-      <p class="error-from-condition" v-if="errorFromFetch">Write correct name of the city or the city not found!</p>
+      <p class="error-from-condition" v-if="errorFromCondition">Write name of the city!</p>
+      <p class="error-from-fetch" v-if="errorFromFetch">Write correct name of the city or the city not found!</p>
     </div>
     <div class="episode-tab__characters episode-tab__child">
       <p class="episode-tab__characters__title">Characters:</p>
